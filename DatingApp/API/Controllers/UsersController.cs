@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using API.Data;
 using API.Entities;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace API.Controllers
 {
@@ -20,20 +21,22 @@ namespace API.Controllers
         }
 
         [HttpGet]
-        public ActionResult<IEnumerable<AppUser>> GetUsers()
+        public async Task<ActionResult<IEnumerable<AppUser>>> GetUsers()
         {
-            var users = _context.Users.ToList();
-
-            return users;
+            // So when a request goes to the database, this code pauses, it waits and then
+            // is deferred to a Task which then goes and makes the query to the database.
+            // When this tasks comes back we need to get the results out of it, this is done
+            // by the await keyword.
+            return await _context.Users.ToListAsync();
         }
 
         // api/users/3
         [HttpGet("{id}")]
-        public ActionResult<AppUser> GetUser(int id)
+        public async Task<ActionResult<AppUser>> GetUser(int id)
         {
-            var user = _context.Users.Find(id);
+            var user = _context.Users.FindAsync(id);
 
-            return user;
+            return await user;
         }
     }
 }
