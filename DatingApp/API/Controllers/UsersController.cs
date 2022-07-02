@@ -11,7 +11,7 @@ namespace API.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class UsersController : ControllerBase
+    public class UsersController : BaseApiController
     {
         private readonly DataContext _context;
 
@@ -23,10 +23,6 @@ namespace API.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<AppUser>>> GetUsers()
         {
-            // So when a request goes to the database, this code pauses, it waits and then
-            // is deferred to a Task which then goes and makes the query to the database.
-            // When this tasks comes back we need to get the results out of it, this is done
-            // by the await keyword.
             return await _context.Users.ToListAsync();
         }
 
