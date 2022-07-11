@@ -19,22 +19,27 @@ export class AccountService {
 
   login(model: any) {
     return this.http.post(this.baseUrl + 'account/login', model).pipe(
-      // This will run because we are subscribing in the components.
       map((response: User) => {
-        // Response regarding if their is a user where we can successfully login.
         const user = response;
         
-        // We either have a user or we don't.
         if (user) {
-          // Populate user into localstorage in the browser.
           localStorage.setItem('user', JSON.stringify(user));
-
-          // Set current user to this user
           this.currentUserSource.next(user);
         }
       })
     )
   }
+
+  // regiser(model: any) {
+  //   return this.http.post(this.baseUrl + 'account/register', model).pipe(
+  //     map((user: User) => {
+  //       if (user) {
+  //         localStorage.setItem('user', JSON.stringify(user));
+  //         this.currentUserSource.next(user);
+  //       }
+  //     })
+  //   )
+  // }
 
 
   setCurrentUser(user: User) {
