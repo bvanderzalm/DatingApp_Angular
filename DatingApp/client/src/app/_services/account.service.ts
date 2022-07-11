@@ -11,7 +11,6 @@ import { User } from '../_models/user';
 })
 export class AccountService {
   baseUrl = 'https://localhost:5001/api/';
-  // Only need 1 user at a time.
   private currentUserSource = new ReplaySubject<User>(1);
   currentUser$ = this.currentUserSource.asObservable();
 
@@ -30,17 +29,17 @@ export class AccountService {
     )
   }
 
-  // regiser(model: any) {
-  //   return this.http.post(this.baseUrl + 'account/register', model).pipe(
-  //     map((user: User) => {
-  //       if (user) {
-  //         localStorage.setItem('user', JSON.stringify(user));
-  //         this.currentUserSource.next(user);
-  //       }
-  //     })
-  //   )
-  // }
-
+  regiser(model: any) {
+    return this.http.post(this.baseUrl + 'account/register', model).pipe(
+      map((user: User) => {
+        if (user) {
+          localStorage.setItem('user', JSON.stringify(user));
+          this.currentUserSource.next(user);
+        }
+        // return user; // In register.component.ts we are console.log() the response we get aka the username and password we typed in for the new user. If you leave this line it will show those in the console.
+      })
+    )
+  }
 
   setCurrentUser(user: User) {
     this.currentUserSource.next(user);
