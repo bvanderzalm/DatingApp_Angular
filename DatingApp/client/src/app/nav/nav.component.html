@@ -1,16 +1,18 @@
 <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
     <div class="container">
-        <a class="navbar-brand" href="#">Dating App</a>
+        <!-- Before we had href="#" or something. Now we have a routerLink from our app-routing.module.ts that routes to the other HTML components -->
+        <a class="navbar-brand" routerLink='/'>Dating App</a>
 
         <ul class="navbar-nav mr-auto" *ngIf="accountService.currentUser$ | async">
             <li class="nav-item">
-                <a class="nav-link" href="#">Matches</a>
+                <!-- Here we have that same routerLink BUT we also have routerLinkActive. So if you're on Matches page the link will always appear as if your mouse is hovering over it. -->
+                <a class="nav-link" routerLink='/members' routerLinkActive='active'>Matches</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">Lists</a>
+                <a class="nav-link" routerLink='/lists' routerLinkActive='active'>Lists</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">Messages</a>
+                <a class="nav-link" routerLink='/messages' routerLinkActive='active'>Messages</a>
             </li>
         </ul>
 
