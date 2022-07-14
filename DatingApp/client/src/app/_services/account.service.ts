@@ -36,7 +36,6 @@ export class AccountService {
           localStorage.setItem('user', JSON.stringify(user));
           this.currentUserSource.next(user);
         }
-        // return user; // In register.component.ts we are console.log() the response we get aka the username and password we typed in for the new user. If you leave this line it will show those in the console.
       })
     )
   }
