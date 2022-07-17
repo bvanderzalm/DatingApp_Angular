@@ -22,6 +22,8 @@ namespace API.Entities
         public string Interests { get; set; }
         public string City { get; set; }
         public string Country { get; set; }
+
+        // One to many relationship, one user can have many photos.
         public ICollection<Photo> Photos { get; set; }
 
         public int GetAge()
