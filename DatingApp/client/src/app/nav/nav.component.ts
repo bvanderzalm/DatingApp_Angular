@@ -22,10 +22,6 @@ export class NavComponent implements OnInit {
     this.accountService.login(this.model).subscribe(response => {
       // This will navigate the user to the members page after they have logged in.
       this.router.navigateByUrl('/members');
-    }, error => {
-      console.log(error);
-      // This will give the reason on why the login failed.
-      this.toastr.error(error.error);
     })
   }
 
