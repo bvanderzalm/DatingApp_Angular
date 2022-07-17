@@ -32,7 +32,8 @@ export class ErrorInterceptor implements HttpInterceptor {
                     modalStateErrors.push(error.error.errors[key]);
                   }
                 }
-                throw modalStateErrors;
+                // Compress array of arrays into one 1D array.
+                throw modalStateErrors.flat();
               } 
               // Deal with the other regular 400 error with a popup notification.
               else {
