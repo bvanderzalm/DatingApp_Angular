@@ -8,8 +8,9 @@ namespace API.DTOs
     public class MemberDto
     {
         public int Id { get; set; }
-        public string UserName { get; set; }
-        public int Age { get; set; }
+        public string Username { get; set; }
+        public string PhotoUrl { get; set; }
+        public int Age { get; set; }        // Will automatically grab this because of the GetAge() method inside AppUser (automapper i think)
         public string KnownAs { get; set; }
         public DateTime Created { get; set; }
         public DateTime LastActive { get; set; }
