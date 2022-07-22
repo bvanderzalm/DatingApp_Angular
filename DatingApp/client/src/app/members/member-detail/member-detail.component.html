@@ -1,1 +1,2 @@
-<p>member-detail works!</p>
+<!-- The if statement is to verify member has been loaded in from API. We get undefined errors if we remove that but it still works without it -->
+<h1 *ngIf="member">{{member.knownAs}}</h1>
