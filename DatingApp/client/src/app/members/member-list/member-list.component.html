@@ -1,1 +1,7 @@
-<p>member-list works!</p>
+<div class="row">
+    <div class="col-2">
+        <!-- So 'member' can be anything, like int i = 0 almost. 'members' however is from the component associated with this html file (member-list-component.ts) -->
+        <!-- So the variable called members is an array of models that is the _model member (member.ts) -->
+        <p *ngFor="let member of members">{{member.knownAs}}</p>
+    </div>
+</div>
