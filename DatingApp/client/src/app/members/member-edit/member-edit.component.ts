@@ -43,12 +43,13 @@ export class MemberEditComponent implements OnInit {
   }
 
   updateMember() {
-    console.log(this.member);
-    this.toastr.success('Profile updated successfully');
+    this.memberService.updateMember(this.member).subscribe(() => {
+      this.toastr.success('Profile updated successfully');
     
-    // This will reset the form to what the page was before. So Save changes button will be disabled and
-    // the popup will disappear.
-    this.editForm.reset(this.member);
+      // This will reset the form to what the page was before. So Save changes button will be disabled and
+      // the popup will disappear.
+      this.editForm.reset(this.member);
+    })
   }
 
 }
