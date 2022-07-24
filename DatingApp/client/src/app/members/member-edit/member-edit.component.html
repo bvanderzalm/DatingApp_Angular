@@ -3,8 +3,9 @@
         <h1>Your profile</h1>
     </div>
     <div class="col-8">
-        <div class="alert alert-info">
-            <p><strong>Information: </strong> You have made changes. Any unsaved changes will be lost</p>
+        <!-- This dirty properties means only have this popup come up when there has been changes to the form -->
+        <div class="alert alert-info" *ngIf="editForm.dirty">
+            <strong>Information: </strong> You have made changes. Any unsaved changes will be lost
         </div>
     </div>
     <div class="col-4">
@@ -31,7 +32,9 @@
             </div>
             <div class="card-footer">
                 <div class="btn-group d-flex">
-                    <button class="btn btn-success btn-block">Save Changes</button>
+                    <!-- Putting the form ID here will connect the two -->
+                    <!-- And disable button if form is not dirty or there has been no changes -->
+                    <button [disabled]="!editForm.dirty" form="editForm" class="btn btn-success btn-block">Save Changes</button>
                 </div>
             </div>
         </div>
@@ -40,10 +43,14 @@
     <div class="col-8">
         <tabset class="member-tabset">
             <tab heading='About {{member.knownAs}}'>
-                <form>
+                <!-- Our save changes in the div above doesn't have any connection to this form. We're making changes in this form -->
+                <!-- and the save changes button is elsewhere. Hence we're adding id's to attach it. -->
+                <form #editForm="ngForm" id = "editForm"(ngSubmit)="updateMember()">
                     <h4>Description</h4>
                     <textarea class="form-control" [(ngModel)]="member.introduction" name="introduction" rows="6"></textarea>
                     <h4 class="mt-2">Looking for</h4>
+                    <!-- Angular uses the name property here. If you change the name to lookingfor (no capital F), 
+                        it won't recognize the member.lookingFor  -->
                     <textarea class="form-control" [(ngModel)]="member.lookingFor" name="lookingFor" rows="6"></textarea>
                     <h4 class="mt-2">Interests</h4>
                     <textarea class="form-control" [(ngModel)]="member.interests" name="interests" rows="6"></textarea>
