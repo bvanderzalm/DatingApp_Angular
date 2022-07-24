@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using API.Data;
 using API.DTOs;
@@ -38,6 +39,27 @@ namespace API.Controllers
         {
             return await _userRepository.GetMemberAsync(username);
             
+        }
+
+        // Don't need to send any data back from our API because we are telling the API to update with.
+        //The user has all info needed already.
+        [HttpPut]
+        public async Task<ActionResult> UpdateUser(MemberUpdateDto memberUpdateDto)
+        {
+            // Will get username from the token that the API uses to authenticate this user.
+            var username = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+            var user = await _userRepository.GetUserByUsernameAsync(username);
+
+            // Here were our updating the automapping everything the user has changed.
+            // So instead of this.city = city. We are just allowing automapper to keep everything up to date.
+            _mapper.Map(memberUpdateDto, user);
+
+            _userRepository.Update(user);
+
+            if (await _userRepository.SaveAllAsync()) return NoContent();
+
+            return BadRequest("Failed to update user");
         }
     }
 }
