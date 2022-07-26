@@ -24,6 +24,11 @@ export class RegisterComponent implements OnInit {
       // So the first is the initial string, and validators are stuff that needs to be down where it will alert you if you don't follow them
       // If one of the validators aren't met the FormGroup.status will be set to "invalid"
       username: ['', Validators.required],
+      gender: ['male'],
+      knownAs: ['', Validators.required],
+      dateOfBirth: ['', Validators.required],
+      city: ['', Validators.required],
+      country: ['', Validators.required],
       password: ['', [Validators.required, Validators.minLength(4), Validators.maxLength(8)]],
       confirmPassword: ['', [Validators.required, this.matchValues('password')]]
     })
