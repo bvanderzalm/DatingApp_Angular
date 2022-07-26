@@ -12,11 +12,16 @@ export class RegisterComponent implements OnInit {
   @Output() cancelRegister = new EventEmitter();
   model: any = {};
   registerForm: FormGroup;
+  maxDate: Date;
 
   constructor(private accountService: AccountService, private toastr: ToastrService, private fb: FormBuilder) { }
 
   ngOnInit(): void {
     this.initializeForm();
+    this.maxDate = new Date();
+    // This says that the calendar won't show anything less than 18 years ago.
+    // AKA you have to be 18 or older to start an account
+    this.maxDate.setFullYear(this.maxDate.getFullYear() -18);
   }
 
   initializeForm() {
