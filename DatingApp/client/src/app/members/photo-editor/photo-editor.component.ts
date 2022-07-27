@@ -74,9 +74,15 @@ export class PhotoEditorComponent implements OnInit {
 
     this.uploader.onSuccessItem = (item, response, status, headers) => {
       if (response) {
-        const photo = JSON.parse(response);
+        const photo : Photo = JSON.parse(response);
         // This will push our photo into our photo array
         this.member.photos.push(photo);
+        // This should update the image everywhere (including nav bar)
+        if (photo.isMain) {
+          this.user.photoUrl = photo.url;
+          this.member.photoUrl = photo.url;
+          this.accountService.setCurrentUser(this.user);
+        }
       }
     }
   }
