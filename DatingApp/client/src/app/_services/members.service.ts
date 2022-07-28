@@ -1,6 +1,6 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { of } from 'rxjs';
+import { of, pipe } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { Member } from '../_models/member';
@@ -15,10 +15,21 @@ export class MembersService {
 
   // This service is in use until we shut it down, so why not store the members info.
   members: Member[] = [];
+  memberCache = new Map();
 
   constructor(private http: HttpClient) { }
 
   getMembers(userParams: UserParams) {
+    // Uncomment this to visualize what's going on here.
+    // console.log(Object.values(userParams).join('-'));
+
+    // The idea here that we go to our API, we go and get our members if we don't have any cached, 
+    // but if we do have them in our cache and the query is identical, then we just retrieve this from our cache.
+    var response = this.memberCache.get(Object.values(userParams).join('-'));
+    if (response) {
+      return of(response);
+    }
+
     let params = this.getPaginationHeaders(userParams.pageNumber, userParams.pageSize);
 
     params = params.append('minAge', userParams.minAge.toString());
@@ -27,7 +38,13 @@ export class MembersService {
     params = params.append('orderBy', userParams.orderBy);
     
     // When we are observing an response, we are getting the full response back.
-    return this.getPaginatedResults<Member[]>(this.baseUrl + 'users', params);
+    return this.getPaginatedResults<Member[]>(this.baseUrl + 'users', params)
+    .pipe(  // Store query in cache based on the values and key separated all of them with dash
+      map(response => {
+        this.memberCache.set(Object.values(userParams).join('-'), response);
+        return response;
+      })
+    )
   }
 
   getMember(username: string) {
