@@ -3,3 +3,19 @@
         <app-member-card [member]="member"></app-member-card>
     </div>
 </div>
+
+<div class="d-flex justify-content-center" *ngIf="pagination" >
+    <!-- Boundary links won't allow you to go on to the next page if you are on the last one -->
+    <pagination 
+        [boundaryLinks]="true" 
+        [totalItems]="pagination.totalItems"
+        [itemsPerPage]="pagination.itemsPerPage"
+        [(ngModel)]="pagination.currentPage"
+        (pageChanged)="pageChanged($event)"
+
+        previousText="&lsaquo;" 
+        nextText="&rsaquo;" 
+        firstText="&laquo;" 
+        lastText="&raquo;">
+</pagination>
+</div>

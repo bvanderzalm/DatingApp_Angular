@@ -27,4 +27,10 @@ export class MemberListComponent implements OnInit {
       this.pagination = response.pagination;
     })
   }
+
+  // So if a page is changed on the html it will trigger this method based on the event we passed
+  pageChanged(event: any) {
+    this.pageNumber = event.page;
+    this.loadMembers();
+  }
 }
