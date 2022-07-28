@@ -20,11 +20,14 @@ export class MemberListComponent implements OnInit {
   user: User;
   genderList = [{value: 'male', display: 'Males'}, {value: 'female', display: 'Females'}];
 
-  constructor(private memberService: MembersService, private accountService: AccountService) {
-    this.accountService.currentUser$.pipe(take(1)).subscribe(user => {
-      this.user = user;
-      this.userParams = new UserParams(user);
-    })
+  constructor(private memberService: MembersService) {
+    // BEFORE
+    // this.accountService.currentUser$.pipe(take(1)).subscribe(user => {
+    //   this.user = user;
+    //   this.userParams = new UserParams(user);
+    // })
+
+    this.userParams = this.memberService.getUserParams();
   }
 
   ngOnInit(): void {
@@ -32,6 +35,7 @@ export class MemberListComponent implements OnInit {
   }
 
   loadMembers() {
+    this.memberService.setUserParams(this.userParams);
     this.memberService.getMembers(this.userParams).subscribe(response => {
       this.members = response.result;
       this.pagination = response.pagination;
@@ -39,13 +43,14 @@ export class MemberListComponent implements OnInit {
   }
 
   resetFilters() {
-    this.userParams = new UserParams(this.user);
+    this.userParams = this.memberService.resetUserParams();
     this.loadMembers();
   }
 
   // So if a page is changed on the html it will trigger this method based on the event we passed
   pageChanged(event: any) {
     this.userParams.pageNumber = event.page;
+    this.memberService.setUserParams(this.userParams);
     this.loadMembers();
   }
 }
