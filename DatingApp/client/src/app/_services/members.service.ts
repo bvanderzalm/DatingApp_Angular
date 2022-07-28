@@ -24,6 +24,7 @@ export class MembersService {
     params = params.append('minAge', userParams.minAge.toString());
     params = params.append('maxAge', userParams.maxAge.toString());
     params = params.append('gender', userParams.gender);
+    params = params.append('orderBy', userParams.orderBy);
     
     // When we are observing an response, we are getting the full response back.
     return this.getPaginatedResults<Member[]>(this.baseUrl + 'users', params);
