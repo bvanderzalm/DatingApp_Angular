@@ -48,7 +48,8 @@
                     style="display: inline-block; margin-bottom: 20px;"></ngx-gallery>
             </tab>
             <tab heading='Messages'>
-                <p>Messages will go here</p>
+                <!-- [username] is the @Input in ts file. -->
+                <app-member-messages [username]="member.username"></app-member-messages>
             </tab>
         </tabset>
     </div>
