@@ -36,8 +36,10 @@ export class ErrorInterceptor implements HttpInterceptor {
                 throw modalStateErrors.flat();
               } 
               // Deal with the other regular 400 error with a popup notification.
-              else {
+              else if (typeof(error.error) === 'object') {
                 this.toastr.error(error.statusText, error.status);
+              } else {
+                this.toastr.error(error.error, error.status);
               }
               break;
             
