@@ -31,7 +31,8 @@
             <th style="width: 20%"></th>
         </tr>
         <!-- Second row is our actual messages where we will loop through them all -->
-        <tr *ngFor="let message of messages" 
+        <!-- Keep row hidden if we are loading. Boolean set to true before doing API, false after we get the info -->
+        <tr [hidden]="loading" *ngFor="let message of messages" 
             routerLink='{{container === "Outbox" 
                 ? "/members/" + message.recipientUsername 
                 : "/members/" + message.senderUsername}}' [queryParams]="{tab: 3}">
@@ -63,7 +64,8 @@
     </table>
 </div>
 
-<div class="d-flex justify-content-center" *ngIf="pagination" >
+<!-- Only show pagination at the bottom if it exists obv, you are not loading, and there actually messages there -->
+<div class="d-flex justify-content-center" *ngIf="pagination && !loading && messages?.length !== 0" >
     <!-- Boundary links won't allow you to go on to the next page if you are on the last one -->
     <pagination 
         [boundaryLinks]="true" 
