@@ -31,11 +31,19 @@
     </div>
 
     <div class="card-footer">
-        <form>
+        <form #messageForm="ngForm" (ngSubmit)="sendMessage()" autocomplete="off">
             <div class="input-group">
-                <input type="text" class="form-control input-sm" placeholder="Send a private message">
+                <!-- Name is messageContent which is the same as string property in ts file. -->
+                <input 
+                    name="messageContent"
+                    required
+                    [(ngModel)]="messageContent"
+                    type="text" 
+                    class="form-control input-sm" 
+                    placeholder="Send a private message">
                 <div class="input-group-append">
-                    <button class="btn btn-primary" type="submit">Send</button>
+                    <!-- Disable if the form is invalid. Makes it invalid with the required message -->
+                    <button [disabled]="!messageForm.valid" class="btn btn-primary" type="submit">Send</button>
                 </div>
             </div>
         </form>

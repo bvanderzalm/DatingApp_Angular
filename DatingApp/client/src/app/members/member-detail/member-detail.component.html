@@ -52,7 +52,7 @@
             </tab>
             <tab heading='Messages' (selectTab)="onTabActivated($event)">
                 <!-- [messages] is the @Input in ts file. -->
-                <app-member-messages [messages]="messages"></app-member-messages>
+                <app-member-messages [messages]="messages" [username]="member.username"></app-member-messages>
             </tab>
         </tabset>
     </div>
