@@ -11,6 +11,6 @@ namespace API.Interfaces
     // properties, methods, and/or events.
     public interface ITokenService
     {
-        string CreateToken(AppUser user);
+        Task<string> CreateToken(AppUser user);
     }
 }
