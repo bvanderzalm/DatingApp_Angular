@@ -85,12 +85,6 @@ namespace API.Data
                 .ToListAsync();
         }
 
-        public async Task<bool> SaveAllAsync()
-        {
-            // If something changed and the number returned is greater than zero (number being the number of changes)
-            return await _context.SaveChangesAsync() > 0;
-        }
-
         public void Update(AppUser user)
         {
             // Marks the entity as modified.
