@@ -54,8 +54,8 @@
                     style="display: inline-block; margin-bottom: 20px;"></ngx-gallery>
             </tab>
             <tab heading='Messages' (selectTab)="onTabActivated($event)">
-                <!-- [messages] is the @Input in ts file. -->
-                <app-member-messages [messages]="messages" [username]="member.username"></app-member-messages>
+                <!-- [username] is the @Input in ts file. -->
+                <app-member-messages [username]="member.username"></app-member-messages>
             </tab>
         </tabset>
     </div>
