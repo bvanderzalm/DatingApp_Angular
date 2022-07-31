@@ -25,15 +25,8 @@ namespace API.Data
             // Loop through all users
             foreach (var user in users)
             {
-                using var hmac = new HMACSHA512();
-
                 user.UserName = user.UserName.ToLower();
-
-                // Set password for all users, used just for development to see what our app would look like with sample data.
-                user.PasswordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes("Pa$$w0rd"));
-                user.PasswordSalt = hmac.Key;
-
-                context.Users.Add(user);
+                await context.Users.AddAsync(user);
             }
 
             await context.SaveChangesAsync();

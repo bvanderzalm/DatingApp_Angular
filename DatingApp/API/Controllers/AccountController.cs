@@ -35,12 +35,7 @@ namespace API.Controllers
 
             var user = _mapper.Map<AppUser>(registerDto);
 
-            // As soon as we are done with this class it is disposed of correctly.
-            using var hmac = new HMACSHA512();
-
             user.UserName = registerDto.Username.ToLower();
-            user.PasswordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(registerDto.Password));
-            user.PasswordSalt = hmac.Key;
 
             _context.Users.Add(user);
             // Call database and save it into users table
@@ -71,19 +66,6 @@ namespace API.Controllers
                 .SingleOrDefaultAsync(x => x.UserName == loginDto.Username);
 
             if (user == null) return Unauthorized("Invalid username");
-
-            // Compare passwords to verify they match to what the user typed in.
-            using var hmac = new HMACSHA512(user.PasswordSalt);
-
-            // Compute the hash of what the user typed in for the password field.
-            var computedHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(loginDto.Password));
-
-            // Verify that the computed hash is identical to the hash in the database.
-            for (int i = 0; i < computedHash.Length; i++)
-            {
-                if (computedHash[i] != user.PasswordHash[i])
-                    return Unauthorized("Invalid password");
-            }
 
             return new UserDto
             {
