@@ -57,7 +57,8 @@
             
             <td>{{message.messageSent | timeago}}</td>
             <td>
-                <button class="btn btn-danger">Delete</button>
+                <!-- The 2nd click event is obviously going to delete the msg but the stop progagation prevents us from routing to another page when we hit the delete button -->
+                <button (click)="$event.stopPropagation()" (click)="deleteMessage(message.id)" class="btn btn-danger">Delete</button>
                 <!-- <button class="btn btn-danger"><i class="fa fa-trash"></i></button> -->
             </td>
         </tr>
