@@ -49,8 +49,8 @@ namespace API.Data
             query = query.Where(u => u.Gender == userParams.Gender);
             
             // Determine age range
-            var minDob = DateTime.Today.AddYears(-userParams.MaxAge - 1);
-            var maxDob = DateTime.Today.AddYears(-userParams.MinAge);
+            var minDob = DateTime.UtcNow.AddYears(-userParams.MaxAge - 1);
+            var maxDob = DateTime.UtcNow.AddYears(-userParams.MinAge);
 
             // This will show only certain users in a particular age range.
             query = query.Where(u => u.DateOfBirth >= minDob && u.DateOfBirth <= maxDob);
